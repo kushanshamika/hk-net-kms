@@ -6,17 +6,18 @@ import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import { useNavigate } from 'react-router-dom';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
+import axios from '../config/axiosConfig';
 import Copyright from '../components/Copyright';
-import { useAuth } from '../hooks/AuthProvider';
 
 
-export default function SignIn() {
+export default function SignUp() {
 
-    const auth = useAuth();
+    const navigate = useNavigate();
 
     const [formData, setFormData] = React.useState({
         username: '',
@@ -34,8 +35,13 @@ export default function SignIn() {
 
         event.preventDefault();
 
-        auth.loginAction(formData);
-
+        axios.post('/register', formData)
+        .then(response => {;
+            navigate('../login');
+        })
+        .catch(error => {
+            console.error('Error submitting form:', error);
+        });
     };
 
   return (
@@ -53,7 +59,7 @@ export default function SignIn() {
         <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-        Sign in
+        Sign up
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
         <TextField
@@ -88,12 +94,10 @@ export default function SignIn() {
         >
             Sign In
         </Button>
-        <Grid container>
-            <Grid item xs>
-            </Grid>
+        <Grid container justifyContent="flex-end">
             <Grid item>
-            <Link href="/register" variant="body2">
-                {"Don't have an account? Sign Up"}
+            <Link href="/login" variant="body2">
+                Already have an account? Sign in
             </Link>
             </Grid>
         </Grid>

@@ -7,8 +7,9 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 
 import Copyright from '../components/Copyright';
-import Documents from '../components/Documents';
+import Articles from '../components/Articles';
 import NavBar from '../components/NavBar';
+import Documents from '../components/Documents';
 
 
 
@@ -37,7 +38,7 @@ export default function Dashboard() {
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <Documents />
+                  <Articles />
                 </Paper>
               </Grid>
               <Grid item xs={12}>

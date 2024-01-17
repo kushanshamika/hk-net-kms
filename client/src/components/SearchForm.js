@@ -1,4 +1,3 @@
-// components/SearchPage.js
 import React, { useState } from 'react';
 import {
   Container,
@@ -7,7 +6,11 @@ import {
   Button,
   Card,
   CardContent,
+  CardActions,
 } from '@mui/material';
+import { Link } from 'react-router-dom';
+
+import axios from '../config/axiosConfig';
 
 const styles = {
     searchContainer: {
@@ -31,17 +34,19 @@ const styles = {
 const SearchForm = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
+    const [documentResults, setDocumentResults] = useState([]);
   
     const handleSearch = () => {
-      // Perform search logic (replace with your actual search implementation)
-      // For demonstration purposes, we are using a static list of results
-      const results = [
-        { id: 1, title: 'Result 1', content: 'Lorem ipsum dolor sit amet.' },
-        { id: 2, title: 'Result 2', content: 'Consectetur adipiscing elit.' },
-        { id: 3, title: 'Result 3', content: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-      ];
+
+      axios.get(`/search?query=${searchTerm}`)
+      .then(response => {
+        setSearchResults(response.data.knowledgeArticles);
+        setDocumentResults(response.data.documents);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
   
-      setSearchResults(results);
     };
   
     return (
@@ -65,12 +70,25 @@ const SearchForm = () => {
         </div>
   
         <div style={styles.resultContainer}>
-          {searchResults.map((result) => (
-            <Card key={result.id} style={styles.card}>
+          {searchResults && searchResults.map((result) => (
+            <Card key={result._id} style={styles.card}>
               <CardContent>
                 <Typography variant="h6">{result.title}</Typography>
-                <Typography>{result.content}</Typography>
+                <Typography>{result.content.slice(0, 250)}</Typography>
               </CardContent>
+              <CardActions>
+                <Button size="small" to={`../article/${result._id}`} component={Link}>Read More</Button>
+              </CardActions>
+            </Card>
+          ))}
+          {documentResults && documentResults.map((result) => (
+            <Card key={result._id} style={styles.card}>
+              <CardContent>
+                <Typography variant="h6">{result.title}</Typography>
+              </CardContent>
+              <CardActions>
+                <Button size="small" href={result.presignedURL} target='_blank'>Preview</Button>
+              </CardActions>
             </Card>
           ))}
         </div>

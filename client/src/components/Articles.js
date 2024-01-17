@@ -4,19 +4,20 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import PreviewIcon from '@mui/icons-material/Preview';
 
 import Title from './Title';
 import axios from '../config/axiosConfig';
 import { IconButton } from '@mui/material';
+import { KeyboardDoubleArrowRight } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
 
-export default function Documents() {
+export default function Articles() {
 
   const [data, setData] = React.useState([]);
 
   React.useEffect(() => {
 
-      axios.get('/documents')
+      axios.get('/knowledge/articles')
         .then(response => {
           setData(response.data);
         })
@@ -27,12 +28,12 @@ export default function Documents() {
 
   return (
     <React.Fragment>
-      <Title>Recent Documents</Title>
+      <Title>Recent Articles</Title>
       <Table size="small">
         <TableHead>
           <TableRow>
             <TableCell>Title</TableCell>
-            <TableCell>Uploaded By</TableCell>
+            <TableCell>Content</TableCell>
             <TableCell>Action</TableCell>
           </TableRow>
         </TableHead>
@@ -40,8 +41,8 @@ export default function Documents() {
           {data.map((row) => (
             <TableRow key={row._id}>
               <TableCell>{row.title.slice(0, 50)}</TableCell>
-              <TableCell>{row.userId.slice(0, 250)}</TableCell>
-              <TableCell><IconButton aria-label="delete" href={row.presignedURL} target='_blank'> <PreviewIcon /> </IconButton></TableCell>
+              <TableCell>{row.content.slice(0, 250)}</TableCell>
+              <TableCell><IconButton component={Link} to={`/article/${row._id}`} aria-label="read"> <KeyboardDoubleArrowRight /> </IconButton></TableCell>
             </TableRow>
           ))}
         </TableBody>

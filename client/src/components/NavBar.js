@@ -4,15 +4,16 @@ import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import Badge from '@mui/material/Badge';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 
-import { mainListItems, secondaryListItems } from '../components/listItems';
+import { mainListItems } from '../components/listItems';
+import { useAuth } from '../hooks/AuthProvider';
+import { Navigate } from 'react-router-dom';
+import { Logout } from '@mui/icons-material';
 
 const drawerWidth = 240;
 
@@ -61,16 +62,18 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function NavBar() {
+    const user = useAuth();
     const [open, setOpen] = React.useState(true);
     const toggleDrawer = () => {
       setOpen(!open);
     };
+    if (!user.user) return <Navigate to={'/login'} />;
   return (
     <Fragment>
 <AppBar position="absolute" open={open}>
           <Toolbar
             sx={{
-              pr: '24px', // keep right padding when drawer closed
+              pr: '24px',
             }}
           >
             <IconButton
@@ -95,9 +98,7 @@ export default function NavBar() {
               Dashboard
             </Typography>
             <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
+                <Logout onClick={() => user.logOut()} />
             </IconButton>
           </Toolbar>
         </AppBar>
@@ -117,8 +118,6 @@ export default function NavBar() {
           <Divider />
           <List component="nav">
             {mainListItems}
-            <Divider sx={{ my: 1 }} />
-            {secondaryListItems}
           </List>
         </Drawer>
     </Fragment>
