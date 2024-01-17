@@ -6,7 +6,7 @@ const Document = require('../models/Document');
 aws.config.update({
   accessKeyId: 'DO00WUTAW22C63QPXBAB',
   secretAccessKey: '1pDSM5MhRpZc3X1sSjkMVQXiIsgbnTKEycEcDLRKYiA',
-  region: 'blr1', // e.g., 'nyc3'
+  region: 'blr1',
   endpoint: 'blr1.digitaloceanspaces.com'
 });
 
