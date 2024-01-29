@@ -37,7 +37,7 @@ exports.uploadDocument = (req, res) => {
 
     try {
       
-      const newDocument = new Document({ filename: uniqueFileName, userId: req.body.userId, title: req.body.title });
+      const newDocument = new Document({ filename: uniqueFileName, userId: req.body.userId, title: req.body.title, project: req.body.project });
       await newDocument.save();
       res.status(201).send('Document uploaded successfully');
     } catch (error) {
