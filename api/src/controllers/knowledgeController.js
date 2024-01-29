@@ -37,10 +37,10 @@ exports.getAllKnowledgeArticles = async (req, res) => {
 
 exports.searchEntities = async (req, res) => {
   try {
-    const { query } = req.query;
+    const { query, appId } = req.query;
 
-    if (!query) {
-      return res.status(400).send('Query parameter is required');
+    if (!query || !appId) {
+      return res.status(400).send('Query and App ID are required');
     }
 
     const knowledgeResults = await KnowledgeArticle.find({
@@ -51,9 +51,14 @@ exports.searchEntities = async (req, res) => {
     });
 
     const documentResults = await Document.find({
-      $or: [
-        { filename: { $regex: query, $options: 'i' } },
-        { title: { $regex: query, $options: 'i' } },
+      $and: [
+        { appId },
+        {
+          $or: [
+            { filename: { $regex: query, $options: 'i' } },
+            { title: { $regex: query, $options: 'i' } },
+          ],
+        },
       ],
     });
 

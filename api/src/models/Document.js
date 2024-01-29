@@ -5,6 +5,7 @@ const documentSchema = new mongoose.Schema({
   filename: String,
   userId: String,
   project: String,
+  appId: String,
 });
 
 module.exports = mongoose.model('Document', documentSchema);

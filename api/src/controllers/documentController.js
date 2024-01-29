@@ -37,7 +37,7 @@ exports.uploadDocument = (req, res) => {
 
     try {
       
-      const newDocument = new Document({ filename: uniqueFileName, userId: req.body.userId, title: req.body.title, project: req.body.project });
+      const newDocument = new Document({ filename: uniqueFileName, userId: req.body.userId, title: req.body.title, project: req.body.project, appId: req.body.appId });
       await newDocument.save();
       res.status(201).send('Document uploaded successfully');
     } catch (error) {
@@ -49,7 +49,12 @@ exports.uploadDocument = (req, res) => {
 
 exports.getAllDocuments = async (req, res) => {
   try {
-    const documents = await Document.find();
+    const { appId } = req.query;
+
+    if (!appId) {
+      return res.status(400).send('App ID is required');
+    }
+    const documents = await Document.find({ appId });
     
     // Generate pre-signed URLs for each document
     const documentsWithPresignedURLs = await Promise.all(documents.map(async (doc) => {
