@@ -7,6 +7,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import ArticleIcon from '@mui/icons-material/Article';
 import SearchIcon from '@mui/icons-material/Search';
 import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
 
 export const mainListItems = (
   <React.Fragment>
@@ -45,6 +46,15 @@ export const mainListItems = (
         <DocumentScannerIcon />
       </ListItemIcon>
       <ListItemText primary="Document" />
+    </ListItemButton>
+    <ListItemButton
+      to={"/projects"}
+      component={Link}
+    >
+      <ListItemIcon>
+        <AccountTreeIcon />
+      </ListItemIcon>
+      <ListItemText primary="Project" />
     </ListItemButton>
   </React.Fragment>
 );

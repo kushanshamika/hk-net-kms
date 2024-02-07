@@ -16,7 +16,7 @@ export default function Documents() {
 
   React.useEffect(() => {
 
-      axios.get('/documents')
+      axios.get('/documents?appId=a667ddd8-1a75-4b34-babc-b041d89a11e8')
         .then(response => {
           setData(response.data);
         })
@@ -32,6 +32,7 @@ export default function Documents() {
         <TableHead>
           <TableRow>
             <TableCell>Title</TableCell>
+            <TableCell>Project</TableCell>
             <TableCell>Uploaded By</TableCell>
             <TableCell>Action</TableCell>
           </TableRow>
@@ -40,6 +41,7 @@ export default function Documents() {
           {data.map((row) => (
             <TableRow key={row._id}>
               <TableCell>{row.title.slice(0, 50)}</TableCell>
+              <TableCell>{row.project}</TableCell>
               <TableCell>{row.userId.slice(0, 250)}</TableCell>
               <TableCell><IconButton aria-label="delete" href={row.presignedURL} target='_blank'> <PreviewIcon /> </IconButton></TableCell>
             </TableRow>

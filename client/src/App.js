@@ -9,6 +9,8 @@ import Upload from './pages/Upload';
 import AuthProvider from './hooks/AuthProvider';
 import ArticleView from './pages/ArticleView';
 import SignUp from './pages/SignUp';
+import Projects from './pages/Projects';
+import Project from './pages/Project';
 
 
 function App() {
@@ -22,6 +24,8 @@ function App() {
             <Route path='/article' element={<Article />} />
             <Route path='/search' element={<Search />} />
             <Route path='/upload' element={<Upload />} />
+            <Route path='/projects' element={<Projects />} />
+            <Route path='/project' element={<Project />} />
             <Route path='/article/:articleId' element={<ArticleView />} />
           </Routes>
       </AuthProvider>

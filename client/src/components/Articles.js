@@ -34,6 +34,7 @@ export default function Articles() {
           <TableRow>
             <TableCell>Title</TableCell>
             <TableCell>Content</TableCell>
+            <TableCell>Project</TableCell>
             <TableCell>Action</TableCell>
           </TableRow>
         </TableHead>
@@ -42,6 +43,7 @@ export default function Articles() {
             <TableRow key={row._id}>
               <TableCell>{row.title.slice(0, 50)}</TableCell>
               <TableCell>{row.content.slice(0, 250)}</TableCell>
+              <TableCell>{row.project}</TableCell>
               <TableCell><IconButton component={Link} to={`/article/${row._id}`} aria-label="read"> <KeyboardDoubleArrowRight /> </IconButton></TableCell>
             </TableRow>
           ))}

@@ -38,7 +38,7 @@ const SearchForm = () => {
   
     const handleSearch = () => {
 
-      axios.get(`/search?query=${searchTerm}`)
+      axios.get(`/search?query=${searchTerm}&appId=a667ddd8-1a75-4b34-babc-b041d89a11e8`)
       .then(response => {
         setSearchResults(response.data.knowledgeArticles);
         setDocumentResults(response.data.documents);
