@@ -22,5 +22,7 @@ app.use(knowledgeRoutes);
 app.use(projectRoutes);
 
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  // console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+module.exports = app;
